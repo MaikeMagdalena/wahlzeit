@@ -96,6 +96,12 @@ public class Photo extends DataObject {
 	protected PhotoSize maxPhotoSize = PhotoSize.MEDIUM; // derived
 	
 	/**
+	 * Maike adap-hw02
+	 * TODO: use this somehow (in the next exercises)
+	 */
+	protected Location location = null;
+	
+	/**
 	 *
 	 */
 	protected Tags tags = Tags.EMPTY_TAGS;
