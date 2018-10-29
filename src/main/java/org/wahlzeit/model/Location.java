@@ -1,8 +1,27 @@
-//Maike adap-hw02
+/*
+ * adap-hw 02
+ *
+ * This file is part of the Wahlzeit photo rating application.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public
+ * License along with this program. If not, see
+ * <http://www.gnu.org/licenses/>.
+ */
+
 package org.wahlzeit.model;
 
 public class Location {
-	public Coordinate coordinate = null;
+	public Coordinate coordinate;
 	
 	/**
 	 * This is the constructor. Location consists of a Coordinate (consisting of x, y, z).
@@ -17,10 +36,9 @@ public class Location {
 	 */
 	@Override
 	// Overrides an inherited Method (coming from java.lang.object)
-	// Source -- Override/ImplementMethods
 	public boolean equals(Object arg0) {
-		Location locat = (Location) arg0;
+		Location location = (Location) arg0;
 		
-		return locat.coordinate.isEqual(this.coordinate);
+		return location.coordinate.isEqual(this.coordinate);
 	}
 }
