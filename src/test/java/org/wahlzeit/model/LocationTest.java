@@ -60,4 +60,36 @@ public class LocationTest {
 		assertFalse(l1.equals(l2));
 	}
 	
+	/**
+	 * This test checks if the argument exception works for null argument
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testEqualsExceptionNullArg(){
+		Coordinate coord = new Coordinate(0.0, 0.0, 0.0);
+		Location loc = new Location(coord);
+		loc.equals(null);
+	}
+	
+	/**
+	 * This test checks if the argument exception works for illegal object type
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testEqualsExceptionLocation(){
+		Coordinate coord = new Coordinate(0.0, 0.0, 0.0);
+		Location loc = new Location(coord);
+		Object obj = new Object();
+		loc.equals(obj);
+	}
+	
+	/**
+	 * This test checks if the state exception works
+	 */
+	@Test(expected = IllegalStateException.class)
+	public void testEqualsStateException(){
+		Coordinate coord = new Coordinate(0.0, 0.0, 0.0);
+		Location loc = new Location(coord);
+		loc.coordinate = null;
+		
+		loc.equals(coord);
+	}
 }

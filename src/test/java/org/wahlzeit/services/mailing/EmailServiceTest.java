@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
- * This file is part of the Wahlzeit photo rating application.
+ *This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -24,8 +22,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.wahlzeit.services.EmailAddress;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class EmailServiceTest {
 
@@ -57,4 +54,31 @@ public class EmailServiceTest {
 			Assert.fail("Silent mode does not allow exceptions");
 		}
 	}
+	
+	/**
+	 * Tests invalid email with bcc
+	 */
+	@Test
+	public void testSendInvalidEmailBcc() {
+		try {
+			assertTrue(emailService.sendEmailIgnoreException(validAddress, validAddress, null, "lol", "hi"));
+			assertFalse(emailService.sendEmailIgnoreException(null, validAddress, validAddress, null, "body"));
+			assertFalse(emailService.sendEmailIgnoreException(validAddress, null, validAddress, "hi", "       "));
+		} catch (Exception ex) {
+			Assert.fail("Silent mode does not allow exceptions");
+		}
+	}
+	
+	/**
+	 * tests valid email with bcc
+	 */
+	@Test
+	public void testSendValidEmailBcc() {
+		try {
+			assertTrue(emailService.sendEmailIgnoreException(validAddress, validAddress, validAddress, "hi", "test"));
+		} catch (Exception ex) {
+			Assert.fail("Silent mode does not allow exceptions");
+		}
+	}
+
 }

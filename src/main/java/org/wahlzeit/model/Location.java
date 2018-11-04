@@ -37,6 +37,18 @@ public class Location {
 	@Override
 	// Overrides an inherited Method (coming from java.lang.object)
 	public boolean equals(Object arg0) {
+		
+		if(this.coordinate == null){
+			throw new IllegalStateException("There is no coordinate");
+		}
+		if(arg0 == null){
+			throw new IllegalArgumentException("Argument can not be null");
+		}
+		if(!(arg0 instanceof Location)){
+			throw new IllegalArgumentException("Argument should be a location");
+		}
+		
+				
 		Location location = (Location) arg0;
 		
 		return location.coordinate.isEqual(this.coordinate);

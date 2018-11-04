@@ -60,7 +60,9 @@ dependencies {
 
 test {
     filter {
-        includeTestsMatching "org.wahlzeit.*"
+    	//HW-04: Use Test Suite
+        //includeTestsMatching "org.wahlzeit.*"
+        includeTestsMatching "AllTests"
     }
     testLogging {
             events "passed", "skipped", "failed"

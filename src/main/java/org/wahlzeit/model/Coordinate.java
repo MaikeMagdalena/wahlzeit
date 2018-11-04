@@ -43,6 +43,10 @@ public class Coordinate {
 	 * @return distance
 	 */
 	public double getDistance(Coordinate coord){
+		if(coord == null){
+			throw new IllegalArgumentException("coord can not be null");
+		}
+		
 		double distance;
 		
 		double dx = coord.x - this.x;
@@ -58,7 +62,20 @@ public class Coordinate {
 	 * @param coord is a given coordinate to check if it is equal with current object's coordinate.
 	 * @return
 	 */
-	public boolean  isEqual(Coordinate coord){
+	public boolean isEqual(Coordinate coord){
+
+		double DELTA = 0.00001;
+		
+		if(coord == null){
+			throw new IllegalArgumentException("coord can not be null");
+		}
+		
+		if (coord.x + DELTA < this.x && coord.x - DELTA > this.x
+				&& coord.y + DELTA < this.y && coord.y - DELTA > this.y
+				&& coord.z + DELTA < this.z && coord.z - DELTA > this.z) {
+			return true;
+		}
+		
 		if (coord.x == this.x && coord.y == this.y && coord.z == this.z){
 			return true;
 		} else {
