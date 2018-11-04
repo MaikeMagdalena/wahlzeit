@@ -20,8 +20,7 @@
 
 package org.wahlzeit.model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -60,6 +59,15 @@ public class CoordinateTest {
 	}
 	
 	/**
+	 * This test checks if the argument exception works
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetDistanceException(){
+		Coordinate coord = new Coordinate(0.0, 0.0, 0.0);
+		coord.getDistance(null);
+	}
+	
+	/**
 	 * Tests if IsEqual works with two identical coordinates.
 	 */
 	@Test
@@ -67,6 +75,15 @@ public class CoordinateTest {
 		Coordinate c1 = new Coordinate(1.00, 1.11, 1.22);
 		Coordinate c2 = new Coordinate(1.00, 1.11, 1.22);
 		assertTrue(c1.isEqual(c2));
+	}
+	
+	/**
+	 * This test checks if the argument exception works
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testIsEqualException(){
+		Coordinate coord = new Coordinate(0.0, 0.0, 0.0);
+		coord.isEqual(null);
 	}
 	
 	/**

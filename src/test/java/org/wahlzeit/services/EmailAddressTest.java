@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
  * This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -64,6 +62,20 @@ public class EmailAddressTest extends TestCase {
 	 */
 	public void testEmptyEmailAddress() {
 		assertFalse(EmailAddress.EMPTY.isValid());
+	}
+	
+	/**
+	 * Checks if a given emailAddress is equal to another
+	 * @return
+	 */
+	public void testIsEqual(){
+		EmailAddress firstAddress = EmailAddress.getFromString("test@test.de");
+		EmailAddress secondAddress = EmailAddress.getFromString("test@test.de");
+		EmailAddress thirdAddress = EmailAddress.getFromString("notest@notest.com");
+		
+		assertTrue(firstAddress.isEqual(secondAddress));
+		assertFalse(firstAddress.isEqual(thirdAddress));
+		assertFalse(firstAddress.isEqual(null));
 	}
 
 }
