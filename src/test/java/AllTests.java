@@ -35,10 +35,14 @@ import org.junit.runners.Suite.SuiteClasses;
 	TellFriendTest.class,
 	
 	// org.wahlzeit.model.*;
-	AccessRightsTest.class, CoordinateTest.class,
+	AccessRightsTest.class, 
 		FlagReasonTest.class, GenderTest.class, GuestTest.class,
 		LocationTest.class, PhotoFilterTest.class, TagsTest.class,
 		UserStatusTest.class, ValueTest.class, RobotPhotoTest.class,
+		UserStatusTest.class, ValueTest.class,
+		
+		CartesianCoordinateTest.class,
+		SphericCoordinateTest.class,
 
 	// org.wahlzeit.model.persistence.*;
 	//AbstractAdapterTest.class,

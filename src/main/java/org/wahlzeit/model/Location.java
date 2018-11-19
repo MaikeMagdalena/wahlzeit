@@ -21,13 +21,13 @@
 package org.wahlzeit.model;
 
 public class Location {
-	public Coordinate coordinate;
+	public CartesianCoordinate coordinate;
 	
 	/**
 	 * This is the constructor. Location consists of a Coordinate (consisting of x, y, z).
 	 * @param coord
 	 */
-	public Location(Coordinate coord){
+	public Location(CartesianCoordinate coord){
 		this.coordinate = coord;
 	}
 

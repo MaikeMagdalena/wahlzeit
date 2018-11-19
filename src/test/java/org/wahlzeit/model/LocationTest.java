@@ -31,7 +31,7 @@ public class LocationTest {
 	 */
 	@Test
 	public void testInitiation(){
-		Coordinate c = new Coordinate(1.0, 2.0, 3.0);
+		CartesianCoordinate c = new CartesianCoordinate(1.0, 2.0, 3.0);
 		Location l = new Location(c);
 		assertTrue(l.coordinate == c);
 	}
@@ -41,8 +41,8 @@ public class LocationTest {
 	 */
 	@Test
 	public void testIsEqual(){
-		Coordinate c1 = new Coordinate(1.00, 1.11, 1.22);
-		Coordinate c2 = new Coordinate(1.00, 1.11, 1.22);
+		CartesianCoordinate c1 = new CartesianCoordinate(1.00, 1.11, 1.22);
+		CartesianCoordinate c2 = new CartesianCoordinate(1.00, 1.11, 1.22);
 		Location l1 = new Location(c1);
 		Location l2 = new Location(c2);
 		assertTrue(l1.equals(l2));
@@ -53,8 +53,8 @@ public class LocationTest {
 	 */
 	@Test
 	public void testIsNotEqual(){
-		Coordinate c1 = new Coordinate(1.00, 1.11, 1.22);
-		Coordinate c2 = new Coordinate(1.00, 1.00, 1.00);
+		CartesianCoordinate c1 = new CartesianCoordinate(1.00, 1.11, 1.22);
+		CartesianCoordinate c2 = new CartesianCoordinate(1.00, 1.00, 1.00);
 		Location l1 = new Location(c1);
 		Location l2 = new Location(c2);
 		assertFalse(l1.equals(l2));
@@ -65,7 +65,7 @@ public class LocationTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEqualsExceptionNullArg(){
-		Coordinate coord = new Coordinate(0.0, 0.0, 0.0);
+		CartesianCoordinate coord = new CartesianCoordinate(0.0, 0.0, 0.0);
 		Location loc = new Location(coord);
 		loc.equals(null);
 	}
@@ -75,7 +75,7 @@ public class LocationTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testEqualsExceptionLocation(){
-		Coordinate coord = new Coordinate(0.0, 0.0, 0.0);
+		CartesianCoordinate coord = new CartesianCoordinate(0.0, 0.0, 0.0);
 		Location loc = new Location(coord);
 		Object obj = new Object();
 		loc.equals(obj);
@@ -86,7 +86,7 @@ public class LocationTest {
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testEqualsStateException(){
-		Coordinate coord = new Coordinate(0.0, 0.0, 0.0);
+		CartesianCoordinate coord = new CartesianCoordinate(0.0, 0.0, 0.0);
 		Location loc = new Location(coord);
 		loc.coordinate = null;
 		
