@@ -21,7 +21,7 @@
 
 package org.wahlzeit.model;
 
-public class CartesianCoordinate implements Coordinate{
+public class CartesianCoordinate extends AbstractCoordinate{
 	private double x;
 	private double y;
 	private double z;
@@ -39,14 +39,30 @@ public class CartesianCoordinate implements Coordinate{
 	}
 	
 	/**
+	 * This method is an assertClassInvatiants-method ONLY for the Cartesian Coordinate
+	 * They should have valid arguments
+	 */
+	protected void assertValidCartesianCoord() throws IllegalArgumentException{
+		if((new Double(this.getX()).isNaN()) || 
+				new Double(this.getY()).isNaN() || 
+				new Double(this.getZ()).isNaN()){
+			throw new IllegalArgumentException("Cartesian coordinate has illegal arguments");
+		}
+	}
+	
+	/**
 	 * This method gives the distance between a given coordinate and the current object.
 	 * @param coord is a given coordinate to calculate the distance to.
 	 * @return distance
 	 */
 	public double getDistance(CartesianCoordinate coord){
-		if(coord == null){
-			throw new IllegalArgumentException("coord can not be null");
-		}
+		
+		//Precondition: Input coordinate should not be null
+		assertNotNull(coord);
+		
+		//Precondition: Cartesian coordinates should have valid arguments
+		coord.assertValidCartesianCoord();
+		this.assertValidCartesianCoord();
 		
 		double distance;
 		
@@ -59,46 +75,15 @@ public class CartesianCoordinate implements Coordinate{
 	}
 	
 	/**
-	 * This methods checks if a given coordinate is equal with the current object's coordinate.
-	 * @param coord is a given coordinate to check if it is equal with current object's coordinate.
-	 * @return
-	 */
-	public boolean isEqual(CartesianCoordinate coord){
-
-		double DELTA = 0.00001;
-		
-		if(coord == null){
-			throw new IllegalArgumentException("coord can not be null");
-		}
-		
-		if (coord.x + DELTA < this.x && coord.x - DELTA > this.x
-				&& coord.y + DELTA < this.y && coord.y - DELTA > this.y
-				&& coord.z + DELTA < this.z && coord.z - DELTA > this.z) {
-			return true;
-		}
-				
-		if (coord.x == this.x && coord.y == this.y && coord.z == this.z){
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	/**
 	 * This method gives back a cartesian coordinate. It is already a cartesian coord, so it gives back itself.
 	 */
 	@Override
 	public CartesianCoordinate asCartesianCoordinate() {
+		
+		//Precondition: Cartesian coordinate should have valid arguments
+		assertValidCartesianCoord();
+		
 		return this;
-	}
-
-	/**
-	 * This method gives back a cartesian distance. This is implemented already as getDistance(CartesianCoordinate)
-	 */
-	@Override
-	public double getCartesianDistance(Coordinate coord) {
-		CartesianCoordinate cartCoord = coord.asCartesianCoordinate();
-		return this.getDistance(cartCoord);
 	}
 
 	/**
@@ -106,10 +91,18 @@ public class CartesianCoordinate implements Coordinate{
 	 */
 	@Override
 	public SphericCoordinate asSphericCoordinate() {
+
+		//Precondition: Cartesian coordinate should have valid arguments
+		assertValidCartesianCoord();		
+		
 		double radius = Math.sqrt(x*x + y*y + z*z);
 		double phi = Math.atan2(y, x);
 		double theta = Math.acos(z/radius);
 		SphericCoordinate spherCoord = new SphericCoordinate(radius, theta, phi);
+		
+		//Postcondition: Spheric coordinate should have valid arguments
+		spherCoord.assertValidSphericCoord();
+		
 		return spherCoord;
 	}
 
@@ -118,14 +111,24 @@ public class CartesianCoordinate implements Coordinate{
 	 */
 	@Override
 	public double getCentralAngle(Coordinate coord) {
+		
+		//Precondition: Input coordinate should not be null
+		assertNotNull(coord);
+		
+		CartesianCoordinate cartCoord = coord.asCartesianCoordinate();
+		
+		//Precondition: Cartesian coordinates should have valid arguments
+		cartCoord.assertValidCartesianCoord();
+		this.assertValidCartesianCoord();
+		
 		double x1 = this.x;
 		double y1 = this.y;
 		double z1 = this.z;
-		double x2 = coord.asCartesianCoordinate().getX();
-		double y2 = coord.asCartesianCoordinate().getY();
-		double z2 = coord.asCartesianCoordinate().getZ();
+		double x2 = cartCoord.getX();
+		double y2 = cartCoord.getY();
+		double z2 = cartCoord.getZ();
 		
-		double DELTA = 0.0000000000000002;
+		//double DELTA = 0.0000000000000002;
 		
 		//calculate with Scalar-Product
 		double centralAngle = 
@@ -135,7 +138,7 @@ public class CartesianCoordinate implements Coordinate{
 				* Math.sqrt(x2 * x2 + y2 * y2 + z2 * z2)
 			);
 		
-		//correct minimal Math-Errors (cos can be only beteween 1 and -1):
+		//correct minimal Math-Errors (cos can be only between 1 and -1):
 		if(centralAngle > 1){
 			centralAngle = centralAngle - DELTA;
 		}
@@ -147,14 +150,6 @@ public class CartesianCoordinate implements Coordinate{
 		return centralAngle;
 	}
 
-	/**
-	 * This method checks if a Coordinate is equal with this one. It is already implemented as "equals"
-	 */
-	@Override
-	public boolean isEqual(Coordinate coord) {
-		return this.equals(coord);
-	}
-	
 
 	public double getX() {
 		return x;
