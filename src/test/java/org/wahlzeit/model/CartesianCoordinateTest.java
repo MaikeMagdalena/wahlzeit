@@ -32,7 +32,7 @@ public class CartesianCoordinateTest {
 	private CartesianCoordinate cartCoord2 = new CartesianCoordinate(1,2,3);
 	private SphericCoordinate spherCoord1 = new SphericCoordinate(1.7320508075688772, 0.9553166181245092, 0.7853981633974483);
 	private SphericCoordinate spherCoord2 = new SphericCoordinate(3.7416573867739413, 0.6405223126794245, 1.1071487177940904);
-	
+		
 	/**
 	 * This Test checks if the constructor of the method works
 	 */
@@ -43,20 +43,27 @@ public class CartesianCoordinateTest {
 	}
 	
 	/**
+	 * This Test checks if the assertValidSphericCoordinate works
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testAssertNotNull(){
+		CartesianCoordinate.assertNotNull(null);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAssertValidCartesianCoordinate(){
+		CartesianCoordinate invalidCoord = new CartesianCoordinate(0.0, 0.0, Double.NaN);
+	}
+	
+	/**
+	 * getDistance()
 	 * This Test checks if one (known) distance is equal to a distance calculated by the .getDistance method
 	 */
 	@Test
 	public void testGetDistance(){
 		CartesianCoordinate c1 = new CartesianCoordinate(1.0, 2.0, 3.0);
 		CartesianCoordinate c2 = new CartesianCoordinate (1.0, 2.0, 4.0);
-		
-//		double dx = c1.getX() - c2.getX();
-//		double dy = c1.getY() - c2.getY();
-//		double dz = c1.getZ() - c2.getZ();
-//		
-//		double d1; //distance calculated in this test
-//		d1 = Math.sqrt(dx * dx + dy *dy + dz * dz);
-		
+				
 		double d1 = 1; //known distance
 		
 		double d2; //distance calculated in the function
@@ -66,51 +73,86 @@ public class CartesianCoordinateTest {
 	}
 	
 	/**
-	 * This test checks if the argument exception works
+	 * getDistance()
+	 * This test checks if the nullPointerException works for a given null argument
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testGetDistanceNullPointerException(){
+		cartCoord1.getDistance(null);
+	}
+	
+	/**
+	 * getDistance()
+	 * This test checks if the IllegalArgumentException works
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetDistanceException(){
-		CartesianCoordinate coord = new CartesianCoordinate(0.0, 0.0, 0.0);
-		coord.getDistance(null);
+		CartesianCoordinate invalidCoord = new CartesianCoordinate(0.0, 0.0, Double.NaN);
+		cartCoord1.getDistance(invalidCoord);
 	}
 	
 	/**
-	 * Tests if IsEqual works with two identical coordinates.
-	 */
-	@Test
-	public void testIsEqual(){
-		CartesianCoordinate c1 = new CartesianCoordinate(1.00, 1.11, 1.22);
-		CartesianCoordinate c2 = new CartesianCoordinate(1.00, 1.11, 1.22);
-		assertTrue(c1.isEqual(c2));
-	}
-	
-	/**
-	 * This test checks if the argument exception works
-	 */
-	@Test(expected = IllegalArgumentException.class)
-	public void testIsEqualException(){
-		CartesianCoordinate coord = new CartesianCoordinate(0.0, 0.0, 0.0);
-		coord.isEqual(null);
-	}
-	
-	/**
-	 * Tests if IsEqual works with two differing coordinates.
-	 */
-	@Test
-	public void testIsNotEqual(){
-		CartesianCoordinate c1 = new CartesianCoordinate(1.00, 1.11, 1.22);
-		CartesianCoordinate c2 = new CartesianCoordinate(1.00, 1.00, 1.00);
-		assertFalse(c1.isEqual(c2));
-	}
-	
-	/**
-	 * 
+	 * asCartesianCoordinate()
+	 * This test checks if a cartesian coordinate is equal with itself as cartesian coordinate
 	 */
 	@Test
 	public void testAsCartesianCoordinate(){
 		assertTrue(cartCoord1.asCartesianCoordinate().isEqual(cartCoord1));
 	}
 	
+	/**
+	 * asCartesianCoordinate()
+	 * This test checks if the IllegalArgumentException works
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAsCartesianCoordinateException(){
+		CartesianCoordinate invalidCoord = new CartesianCoordinate(0.0, 0.0, Double.NaN);
+		invalidCoord.asCartesianCoordinate();
+	}
+	
+	/**
+	 * asSphericCoordinate()
+	 * This test checks if a sphericCoordinate is equal with itself as sphericCoordinate
+	 */
+	@Test
+	public void testAsSphericCoordinate(){
+		assertTrue(cartCoord1.asSphericCoordinate().isEqual(spherCoord1));
+	}
+	
+	/**
+	 * asSphericCoordinate()
+	 * This test checks if the IllegalArgumentException works
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testAsSphericCoordinateCartesianException(){
+		CartesianCoordinate invalidCoord = new CartesianCoordinate(0.0, 0.0, Double.NaN);
+		invalidCoord.asSphericCoordinate();
+	}
+	
+	/**
+	 * getCentralAngle()
+	 * This test checks if the getCentralAngle works with an expected Angle
+	 */
+	@Test
+	public void testGetCentralAngle(){
+		double expectedAngle = 0.3875966866551805;
+		
+		//two cartesian coordinates
+		assertEquals(cartCoord1.getCentralAngle(cartCoord2), expectedAngle, 0.00001);
+		
+		//compare spheric and cartesian coordinates
+		assertEquals(cartCoord1.getCentralAngle(spherCoord2), expectedAngle, 0.00001);
+		
+		//compare one coord with itself
+		assertEquals(cartCoord1.getCentralAngle(cartCoord1), 0, 0.00001);
+	}
+	
+	
+
+	/**
+	 * AbstractCoordinate: getCartesianDistance()
+	 * This test checks if a calculated cartesian distance equals the known distance
+	 */
 	@Test
 	public void testGetCartesianDistance(){
 		double knownDist = 2.23606797749979;
@@ -130,22 +172,62 @@ public class CartesianCoordinateTest {
 		&& cartCoord1.getCartesianDistance(cartCoord1) - DELTA < noDist);
 	}
 	
+	/**
+	 * AbstractCoordinate: getCartesianDistance()
+	 * This test checks if the nullPointerException works for a given null argument
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testGetCartesianDistanceNullPointerException(){
+		cartCoord1.getCartesianDistance(null);		
+	}
+
+	/**
+	 * AbstractCoordinate: getCartesianDistance()
+	 * This test checks if the IllegalArgumentException works
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetCartesianDistanceArgumentException(){
+		CartesianCoordinate invalidCoord = new CartesianCoordinate(0.0, 0.0, Double.NaN);
+		cartCoord1.getCartesianDistance(invalidCoord);
+	}
+		
+	/**
+	 * AbstractCoordinate: isEqual()
+	 * Tests if IsEqual works with two identical coordinates.
+	 */
 	@Test
-	public void testAsSphericCoordinate(){
-		assertTrue(spherCoord1.isEqual(cartCoord1.asCartesianCoordinate()));
+	public void testIsEqual(){
+		CartesianCoordinate c1 = new CartesianCoordinate(1.00, 1.11, 1.22);
+		CartesianCoordinate c2 = new CartesianCoordinate(1.00, 1.11, 1.22);
+		assertTrue(c1.isEqual(c2));
 	}
 	
+	/**
+	 * Tests if IsEqual works with two differing coordinates.
+	 */
 	@Test
-	public void testGetCentralAngle(){
-		double expectedAngle = 0.3875966866551805;
-		
-		//two cartesian coordinates
-		assertEquals(cartCoord1.getCentralAngle(cartCoord2), expectedAngle, 0.00001);
-		
-		//compare spheric and cartesian coordinates
-		assertEquals(cartCoord1.getCentralAngle(spherCoord2), expectedAngle, 0.00001);
-		
-		//compare one coord with itself
-		assertEquals(cartCoord1.getCentralAngle(cartCoord1), 0, 0.00001);
+	public void testIsNotEqual(){
+		CartesianCoordinate c1 = new CartesianCoordinate(1.00, 1.11, 1.22);
+		CartesianCoordinate c2 = new CartesianCoordinate(1.00, 1.00, 1.00);
+		assertFalse(c1.isEqual(c2));
+	}
+	
+	/**
+	 * AbstractCoordinate: isEqual()
+	 * This test checks if the nullPointerException works for a given null argument
+	 */
+	@Test(expected = NullPointerException.class)
+	public void testisEqualNullPointerException(){
+		cartCoord1.isEqual(null);		
+	}
+
+	/**
+	 * AbstractCoordinate: getCartesianDistance()
+	 * This test checks if the IllegalArgumentException works
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testIsEqualArgumentException(){
+		CartesianCoordinate invalidCoord = new CartesianCoordinate(0.0, 0.0, Double.NaN);
+		cartCoord1.isEqual(invalidCoord);
 	}
 }

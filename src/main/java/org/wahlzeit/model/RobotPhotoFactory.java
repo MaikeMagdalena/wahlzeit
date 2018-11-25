@@ -59,7 +59,10 @@ public class RobotPhotoFactory extends PhotoFactory {
 	 * Creates a new photo with the specified id
 	 */
 	@Override
-	public Photo createPhoto(PhotoId id) {
+	public Photo createPhoto(PhotoId id) throws IllegalArgumentException {
+		if(id == null){
+			throw new IllegalArgumentException("Photo ID can not be null");
+		}
 		return new RobotPhoto(id);
 	}
 

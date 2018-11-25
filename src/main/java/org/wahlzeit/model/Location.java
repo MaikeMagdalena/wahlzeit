@@ -21,13 +21,17 @@
 package org.wahlzeit.model;
 
 public class Location {
-	public CartesianCoordinate coordinate;
+	public Coordinate coordinate;
 	
 	/**
 	 * This is the constructor. Location consists of a Coordinate (consisting of x, y, z).
 	 * @param coord
 	 */
-	public Location(CartesianCoordinate coord){
+	public Location(Coordinate coord) throws IllegalArgumentException {
+		if(coord == null){
+			throw new IllegalArgumentException("coordinate can not be null");
+		}
+		
 		this.coordinate = coord;
 	}
 
@@ -36,7 +40,7 @@ public class Location {
 	 */
 	@Override
 	// Overrides an inherited Method (coming from java.lang.object)
-	public boolean equals(Object arg0) {
+	public boolean equals(Object arg0) throws IllegalStateException, IllegalArgumentException{
 		
 		if(this.coordinate == null){
 			throw new IllegalStateException("There is no coordinate");

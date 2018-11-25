@@ -20,7 +20,7 @@
 
 package org.wahlzeit.model;
 
-public class SphericCoordinate implements Coordinate{
+public class SphericCoordinate extends AbstractCoordinate{
 
 	private double phi;
 	private double theta;
@@ -32,88 +32,121 @@ public class SphericCoordinate implements Coordinate{
 	 * @param theta
 	 * @param radius
 	 */
-	public SphericCoordinate(double radius, double theta, double phi){
+	public SphericCoordinate(double radius, double theta, double phi) throws IllegalArgumentException {
+		//Preconditions
+		assertValidRadius(radius);
+		assertValidTheta(theta);
+		assertValidPhi(phi);
+		
 		this.phi = phi;
 		this.theta = theta;
 		this.radius = radius;
 	}
-
+	
+	/**
+	 * This method is an assertClassInvatiants-method ONLY for the Spheric Coordinate
+	 * They should have valid arguments
+	 */
+	protected void assertValidSphericCoord() throws IllegalStateException {
+		try {
+			assertValidRadius(this.getRadius());
+			assertValidTheta(this.getTheta());
+			assertValidPhi(this.getPhi());
+		} catch (IllegalArgumentException argExc) {
+			IllegalStateException stateExc = new IllegalStateException(argExc.getMessage());
+			stateExc.setStackTrace(argExc.getStackTrace());
+			throw stateExc;
+		}
+	}
+	
+	/**
+	 * This method checks if a Radius is valid
+	 * it should not be negative or infinite or NaN
+	 */
+	protected void assertValidRadius(double radius) throws IllegalArgumentException {
+		if(radius < 0){
+			throw new IllegalArgumentException("radius can not be negative");
+		}
+		if(Double.isNaN(radius)){
+			throw new IllegalArgumentException("radius can not be NaN");
+		}
+		if(Double.isInfinite(radius)){
+			throw new IllegalArgumentException("radius can not be infinite");
+		}
+	}
+	
+	/**
+	 * This method checks if a Theta is valid
+	 * it should not be negative or bigger than PI or infinite or NaN
+	 */	
+	protected void assertValidTheta(double theta) throws IllegalArgumentException {
+		if(theta < 0){
+			throw new IllegalArgumentException("theta can not be negative");
+		}
+		if(theta >= Math.PI){
+			throw new IllegalArgumentException("theata can not be bigger than PI");
+		}
+		if(Double.isNaN(theta)){
+			throw new IllegalArgumentException("theta can not be NaN");
+		}
+		if(Double.isInfinite(theta)){
+			throw new IllegalArgumentException("theta can not be infinite");
+		}
+	}
+	
+	/**
+	 * This method checks if a Phi is valid
+	 * it should not be negative or bigger than 2*PI or infinite or NaN
+	 */	
+	protected void assertValidPhi(double phi) throws IllegalArgumentException {
+		if(phi < 0){
+			throw new IllegalArgumentException("radius can not be negative");
+		}
+		if(phi >= Math.PI * 2){
+			throw new IllegalArgumentException("phi can not be bigger than 2*PI");
+		}
+		if(Double.isNaN(phi)){
+			throw new IllegalArgumentException("phi can not be NaN");
+		}
+		if(Double.isInfinite(phi)){
+			throw new IllegalArgumentException("phi can not be infinite");
+		}
+	}
+	
+		
 	/**
 	 * This method calculates Cartesian Coordinates out of the already existing Spheric ones.
 	 */
 	@Override
-	public CartesianCoordinate asCartesianCoordinate() {
+	public CartesianCoordinate asCartesianCoordinate() throws IllegalStateException {
+		
+		//Precondition: Spheric coordinate should have valid arguments
+		assertValidSphericCoord();
+		
 		double x = radius*Math.sin(theta)*Math.cos(phi);
 		double y = radius*Math.sin(theta)*Math.sin(phi);
 		double z = radius*Math.cos(theta);
 		CartesianCoordinate cartCoord = new CartesianCoordinate(x,y,z);
+		
+		//Postcondition: Cartesian coordinate should have valid arguments
+		cartCoord.assertValidCartesianCoord();
+		
 		return cartCoord;
 	}
 
-	/**
-	 * This method gives the CartesianDistance between a given coord and this coordinate. 
-	 * For that both the given one and this one have to be transferred into CartesianCoordinates.
-	 */
-	@Override
-	public double getCartesianDistance(Coordinate coord) {
-		CartesianCoordinate cartCoord = coord.asCartesianCoordinate();
-		CartesianCoordinate cartThis = this.asCartesianCoordinate();
-		return cartThis.getDistance(cartCoord);
-	}
 
 	/**
-	phi * This method gives back a Spheric coordinate. It is already a Spheric coord, so it gives back itself.
+	 * This method gives back a Spheric coordinate. It is already a Spheric coord, so it gives back itself.
 	 */
 	@Override
-	public SphericCoordinate asSphericCoordinate() {
+	public SphericCoordinate asSphericCoordinate() throws IllegalStateException {
+		
+		//Precondition: Spheric coordinate should have valid arguments
+		assertValidSphericCoord();
+		
 		return this;
 	}
 
-	/**
-	 * This method gives back the CentralAngle
-	 */
-	@Override
-	public double getCentralAngle(Coordinate coord) {
-		double psi1 = 90 - this.phi;
-		double lambda1 = this.theta;
-		double psi2 = 90 - coord.asSphericCoordinate().getPhi();
-		double lambda2 = coord.asSphericCoordinate().getTheta();
-		
-		double deltaLambda = Math.abs(lambda1 - lambda2);
-		
-		double centralAngle = Math.acos(
-				Math.sin(psi1) * Math.sin(psi2)
-				+ Math.cos(psi1) * Math.cos(psi2) * Math.cos(deltaLambda));
-		
-		return centralAngle;
-	}
-
-	/**
-	 * Checks if a given coordinate is equal to this coordinate.
-	 */
-	@Override
-	public boolean isEqual(Coordinate coord) {
-		SphericCoordinate spherCoord = coord.asSphericCoordinate();
-		
-		double DELTA = 0.00001;
-		
-		if(spherCoord == null){
-			throw new IllegalArgumentException("coord can not be null");
-		}
-		
-		if (spherCoord.phi + DELTA < this.phi && spherCoord.phi - DELTA > this.phi
-				&& spherCoord.theta + DELTA < this.theta && spherCoord.theta - DELTA > this.theta
-				&& spherCoord.radius + DELTA < this.radius && spherCoord.radius - DELTA > this.radius) {
-			return true;
-		}
-		
-		if (spherCoord.phi == this.phi && spherCoord.theta == this.theta && spherCoord.radius == this.radius){
-			return true;
-			
-		} else {
-			return false;
-		}
-	}
 	
 	public double getPhi(){
 		return phi;

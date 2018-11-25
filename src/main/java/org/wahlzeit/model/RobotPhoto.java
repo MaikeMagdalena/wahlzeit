@@ -46,7 +46,10 @@ public class RobotPhoto extends Photo {
 	/**
 	 * @methodtype set
 	 */
-	public void setProducer(String newProducer){
+	public void setProducer(String newProducer) throws IllegalArgumentException {
+		if (newProducer == null){
+			throw new IllegalArgumentException("newProducer in setProducer can not be null");
+		}
 		producer = newProducer;
 		incWriteCount();
 	}
@@ -61,7 +64,10 @@ public class RobotPhoto extends Photo {
 	/**
 	 * @methodtype set
 	 */
-	public void setRobotClass(String newRobotClass){
+	public void setRobotClass(String newRobotClass) throws IllegalArgumentException {
+		if (newRobotClass == null){
+			throw new IllegalArgumentException("newRobotClass in setRobotClass can not be null");
+		}
 		robotClass = newRobotClass;
 		incWriteCount();
 	}
@@ -76,7 +82,10 @@ public class RobotPhoto extends Photo {
 	/**
 	 * @methodtype set
 	 */
-	public void setMotionRace(String newMotionRace){
+	public void setMotionRace(String newMotionRace) throws IllegalArgumentException {
+		if(newMotionRace == null){
+			throw new IllegalArgumentException("newMotionRace in setMotionRace can not be null");
+		}
 		motionRange = newMotionRace;
 		incWriteCount();
 	}
@@ -91,7 +100,10 @@ public class RobotPhoto extends Photo {
 	/**
 	 * @methodtype set
 	 */
-	public void setCollaborationLevel(String newCollaborationLevel){
+	public void setCollaborationLevel(String newCollaborationLevel) throws IllegalArgumentException {
+		if(newCollaborationLevel == null){
+			throw new IllegalArgumentException("newCollabroationLevel in setCollaborationLevel can not be null");
+		}
 		collaborationLevel = newCollaborationLevel;
 		incWriteCount();
 	}
@@ -106,7 +118,10 @@ public class RobotPhoto extends Photo {
 	/**
 	 * @methodtype set
 	 */
-	public void setApplication(String newApplication){
+	public void setApplication(String newApplication) throws IllegalArgumentException {
+		if(newApplication == null){
+			throw new IllegalArgumentException("newApplication in setApplication can not be null");
+		}
 		application = newApplication;
 		incWriteCount();
 	}

@@ -20,23 +20,16 @@
 
 package org.wahlzeit.model;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Logger;
-
-import org.wahlzeit.model.persistence.ImageStorage;
 import org.wahlzeit.services.LogBuilder;
-
-import com.google.appengine.api.images.Image;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Work;
 
 public class RobotPhotoManager extends PhotoManager {
 
 	private static final Logger log = Logger.getLogger(RobotPhotoManager.class.getName());
-
 	
 	/**
 	 * @methodtype command
