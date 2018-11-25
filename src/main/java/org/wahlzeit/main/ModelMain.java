@@ -95,6 +95,8 @@ public abstract class ModelMain extends AbstractMain {
 	 *
 	 */
 	protected void createUser(String userId, String nickName, String emailAddress, String photoDir) {
+		log.info("createUser wird ausgefuehrt");
+		
 		UserManager userManager = UserManager.getInstance();
 		User user = new User(userId, nickName, emailAddress);
 
@@ -104,6 +106,7 @@ public abstract class ModelMain extends AbstractMain {
 		File[] photoFiles = photoDirFile.listFiles(photoFileFilter);
 
 		if (photoFiles == null) {
+			log.info("photoFiles is Null, Pfad: " + photoDir);
 			return;
 		}
 

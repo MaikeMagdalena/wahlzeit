@@ -20,7 +20,7 @@
 
 package org.wahlzeit.model;
 
-public class SphericCoordinate implements Coordinate{
+public class SphericCoordinate extends AbstractCoordinate{
 
 	private double phi;
 	private double theta;
@@ -50,16 +50,6 @@ public class SphericCoordinate implements Coordinate{
 		return cartCoord;
 	}
 
-	/**
-	 * This method gives the CartesianDistance between a given coord and this coordinate. 
-	 * For that both the given one and this one have to be transferred into CartesianCoordinates.
-	 */
-	@Override
-	public double getCartesianDistance(Coordinate coord) {
-		CartesianCoordinate cartCoord = coord.asCartesianCoordinate();
-		CartesianCoordinate cartThis = this.asCartesianCoordinate();
-		return cartThis.getDistance(cartCoord);
-	}
 
 	/**
 	phi * This method gives back a Spheric coordinate. It is already a Spheric coord, so it gives back itself.
@@ -86,33 +76,6 @@ public class SphericCoordinate implements Coordinate{
 				+ Math.cos(psi1) * Math.cos(psi2) * Math.cos(deltaLambda));
 		
 		return centralAngle;
-	}
-
-	/**
-	 * Checks if a given coordinate is equal to this coordinate.
-	 */
-	@Override
-	public boolean isEqual(Coordinate coord) {
-		SphericCoordinate spherCoord = coord.asSphericCoordinate();
-		
-		double DELTA = 0.00001;
-		
-		if(spherCoord == null){
-			throw new IllegalArgumentException("coord can not be null");
-		}
-		
-		if (spherCoord.phi + DELTA < this.phi && spherCoord.phi - DELTA > this.phi
-				&& spherCoord.theta + DELTA < this.theta && spherCoord.theta - DELTA > this.theta
-				&& spherCoord.radius + DELTA < this.radius && spherCoord.radius - DELTA > this.radius) {
-			return true;
-		}
-		
-		if (spherCoord.phi == this.phi && spherCoord.theta == this.theta && spherCoord.radius == this.radius){
-			return true;
-			
-		} else {
-			return false;
-		}
 	}
 	
 	public double getPhi(){

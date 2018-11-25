@@ -32,7 +32,7 @@ public class CartesianCoordinateTest {
 	private CartesianCoordinate cartCoord2 = new CartesianCoordinate(1,2,3);
 	private SphericCoordinate spherCoord1 = new SphericCoordinate(1.7320508075688772, 0.9553166181245092, 0.7853981633974483);
 	private SphericCoordinate spherCoord2 = new SphericCoordinate(3.7416573867739413, 0.6405223126794245, 1.1071487177940904);
-	
+		
 	/**
 	 * This Test checks if the constructor of the method works
 	 */
@@ -132,7 +132,9 @@ public class CartesianCoordinateTest {
 	
 	@Test
 	public void testAsSphericCoordinate(){
-		assertTrue(spherCoord1.isEqual(cartCoord1.asCartesianCoordinate()));
+		assertEquals(cartCoord1.asSphericCoordinate().getPhi(), spherCoord1.getPhi(), 0.00001);
+		assertEquals(cartCoord1.asSphericCoordinate().getRadius(), spherCoord1.getRadius(), 0.00001);
+		assertEquals(cartCoord1.asSphericCoordinate().getTheta(), spherCoord1.getTheta(), 0.00001);
 	}
 	
 	@Test

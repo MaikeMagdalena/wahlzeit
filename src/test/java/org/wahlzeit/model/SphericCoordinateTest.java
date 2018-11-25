@@ -72,7 +72,9 @@ public class SphericCoordinateTest {
 	
 	@Test
 	public void testAsSphericCoordinate(){
-		assertTrue(spherCoord1.asSphericCoordinate().isEqual(spherCoord1));
+		assertEquals(cartCoord1.asSphericCoordinate().getPhi(), spherCoord1.getPhi(), 0.00001);
+		assertEquals(cartCoord1.asSphericCoordinate().getRadius(), spherCoord1.getRadius(), 0.00001);
+		assertEquals(cartCoord1.asSphericCoordinate().getTheta(), spherCoord1.getTheta(), 0.00001);
 	}
 	
 	@Test
@@ -96,6 +98,8 @@ public class SphericCoordinateTest {
 		
 		//compare cartesian coordinate and spheric coordinate
 		assertTrue(spherCoord1.isEqual(cartCoord1));
+		assertTrue(cartCoord1.isEqual(spherCoord1));
+		
 		assertTrue(!spherCoord1.isEqual(cartCoord2));
 		
 		//compare identical
