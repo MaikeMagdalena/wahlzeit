@@ -1,6 +1,8 @@
 package org.wahlzeit.agents;
 
 import com.google.apphosting.api.ApiProxy;
+
+import org.wahlzeit.DesignPattern;
 import org.wahlzeit.model.LanguageConfigs;
 import org.wahlzeit.model.ModelConfig;
 import org.wahlzeit.model.Photo;
@@ -22,6 +24,15 @@ import java.util.logging.Logger;
 /**
  * An agent class to notify users about new praise received for their photos.
  */
+@DesignPattern(
+		name = "Iterator",
+		participants = {"Client"}
+	)
+//@DesignPattern(
+//		name = "NotificationService",
+//		participants = {"(Subject)", "NotivicationService", "Observer", "Event"}
+//	)
+
 public class NotifyUsersAboutPraiseAgent extends Agent {
 
 	public static final String NAME = "notifyUsersAboutPraise";

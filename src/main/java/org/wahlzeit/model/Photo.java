@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
  * This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -27,6 +25,8 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Parent;
+
+import org.wahlzeit.DesignPattern;
 import org.wahlzeit.services.DataObject;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.Language;
@@ -37,6 +37,20 @@ import java.util.Map;
 /**
  * A photo represents a user-provided (uploaded) photo.
  */
+//DESIGN PATTERN: PHOTO has not only one but more patterns used - but I did not manage to declare more than one pattern in here.
+//Because of this only one pattern is shown "ordinarily", the others are commented out.
+@DesignPattern(
+		name = "Factory",
+		participants = {"Product"}
+	)
+//@DesignPattern(
+//		name = "State",
+//		participants = {"Component"}
+//)
+//@DesignPattern(
+//name = "Iterator",
+//participants = {"Client", "Aggregate", "Element"}
+//)
 @Entity
 public class Photo extends DataObject {
 

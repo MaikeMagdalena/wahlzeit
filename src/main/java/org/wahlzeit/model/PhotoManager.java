@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
+ * 
  * This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -23,6 +22,8 @@ package org.wahlzeit.model;
 import com.google.appengine.api.images.Image;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.Work;
+
+import org.wahlzeit.DesignPattern;
 import org.wahlzeit.model.persistence.ImageStorage;
 import org.wahlzeit.services.LogBuilder;
 import org.wahlzeit.services.ObjectManager;
@@ -43,6 +44,10 @@ import java.util.logging.Logger;
 /**
  * A photo manager provides access to and manages photos.
  */
+@DesignPattern(
+	name = "Factory",
+	participants = {"Client"}
+)
 public class PhotoManager extends ObjectManager {
 
 	/**

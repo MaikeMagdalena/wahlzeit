@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
  * This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,6 +18,7 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.DesignPattern;
 import org.wahlzeit.utils.EnumValue;
 
 /**
@@ -27,6 +26,10 @@ import org.wahlzeit.utils.EnumValue;
  * A photo may be visible or invisible, it may have been flagged, and it may have been deleted.
  * These states are not mutually exclusive, hence the bitset simulation in this class.
  */
+@DesignPattern(
+		name = "State",
+		participants = {"State"}
+)
 public enum PhotoStatus implements EnumValue {
 
 	/**

@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
- * This file is part of the Wahlzeit photo rating application.
+ *This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,6 +18,7 @@
 
 package org.wahlzeit.model;
 
+import org.wahlzeit.DesignPattern;
 import org.wahlzeit.services.LogBuilder;
 
 import java.util.logging.Logger;
@@ -27,6 +26,10 @@ import java.util.logging.Logger;
 /**
  * An Abstract Factory for creating photos and related objects.
  */
+@DesignPattern(
+		name = "Factory",
+		participants = {"Creator"}
+	)
 public class PhotoFactory {
 
 	private static final Logger log = Logger.getLogger(PhotoFactory.class.getName());

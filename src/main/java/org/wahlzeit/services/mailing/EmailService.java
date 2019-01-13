@@ -1,6 +1,4 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
  * This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -20,11 +18,16 @@
 
 package org.wahlzeit.services.mailing;
 
+import org.wahlzeit.DesignPattern;
 import org.wahlzeit.services.EmailAddress;
 
 /**
  * An EmailServer can send emails. Various implementations exist.
  */
+@DesignPattern(
+name = "NotificationService",
+participants = {"(Subject)", "NotivicationService", "Observer", "Event"}
+)
 public interface EmailService {
 
 	/**

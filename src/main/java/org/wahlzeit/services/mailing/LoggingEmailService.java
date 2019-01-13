@@ -1,7 +1,5 @@
 /*
- * Copyright (c) 2006-2009 by Dirk Riehle, http://dirkriehle.com
- *
- * This file is part of the Wahlzeit photo rating application.
+ *This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -20,6 +18,7 @@
 
 package org.wahlzeit.services.mailing;
 
+import org.wahlzeit.DesignPattern;
 import org.wahlzeit.services.EmailAddress;
 import org.wahlzeit.services.LogBuilder;
 
@@ -28,6 +27,12 @@ import java.util.logging.Logger;
 /**
  * A logging mailing service logs email send attempts before sending emails. This is a decorator pattern application.
  */
+@DesignPattern(
+		name = "Decorator", 
+		participants = {
+			"EmailService"
+		}
+)
 public class LoggingEmailService implements EmailService {
 
 	private static final Logger log = Logger.getLogger(LoggingEmailService.class.getName());
