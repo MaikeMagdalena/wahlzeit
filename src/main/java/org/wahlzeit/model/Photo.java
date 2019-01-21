@@ -37,20 +37,20 @@ import java.util.Map;
 /**
  * A photo represents a user-provided (uploaded) photo.
  */
-//DESIGN PATTERN: PHOTO has not only one but more patterns used - but I did not manage to declare more than one pattern in here.
-//Because of this only one pattern is shown "ordinarily", the others are commented out.
+
 @DesignPattern(
 		name = "Factory",
 		participants = {"Product"}
 	)
-//@DesignPattern(
-//		name = "State",
-//		participants = {"Component"}
-//)
-//@DesignPattern(
-//name = "Iterator",
-//participants = {"Client", "Aggregate", "Element"}
-//)
+@DesignPattern(
+		name = "State",
+		participants = {"Component"}
+)
+@DesignPattern(
+name = "Iterator",
+participants = {"Client", "Aggregate", "Element"}
+)
+
 @Entity
 public class Photo extends DataObject {
 

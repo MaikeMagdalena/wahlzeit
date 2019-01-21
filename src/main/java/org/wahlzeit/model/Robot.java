@@ -1,7 +1,7 @@
 /*
- * adap-hw11
+ * adap-hw12
  * 
- *This file is part of the Wahlzeit photo rating application.
+ * This file is part of the Wahlzeit photo rating application.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -18,12 +18,22 @@
  * <http://www.gnu.org/licenses/>.
  */
 
-package org.wahlzeit;
+package org.wahlzeit.model;
 
-import java.lang.annotation.Repeatable;
+public class Robot {
 
-@Repeatable(value = DesignPatterns.class)
-public @interface DesignPattern {
-	String name();
-	String[] participants();
+	//Robot Type. Possible: Indus,trial-, Medical-, Moving Robot, ...
+	protected RobotType robotType = null;
+	
+	/**
+	 * the robot Type of this robot is the incoming RobotType
+	 * @param robotTypeInput
+	 */
+	public Robot(RobotType robotTypeInput){
+		robotType = robotTypeInput;
+	}
+	
+	public RobotType getRobotType(){
+		return robotType;
+	}
 }

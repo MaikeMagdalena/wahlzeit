@@ -20,10 +20,6 @@
 
 package org.wahlzeit;
 
-import java.lang.annotation.Repeatable;
-
-@Repeatable(value = DesignPatterns.class)
-public @interface DesignPattern {
-	String name();
-	String[] participants();
+public @interface DesignPatterns {
+	DesignPattern[] value();
 }
